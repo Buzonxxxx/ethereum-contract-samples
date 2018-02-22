@@ -1,0 +1,19 @@
+{
+  "name": "ethereum-contract-samples",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Buzonxxxx/ethereum-contract-samples.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Buzonxxxx/ethereum-contract-samples/issues"
+  },
+  "homepage": "https://github.com/Buzonxxxx/ethereum-contract-samples#readme"
+}
