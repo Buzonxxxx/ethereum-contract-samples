@@ -14,10 +14,23 @@ beforeEach(async () => {
   myapp = await new web3.eth.Contract(JSON.parse(interface))
     .deploy({ data: bytecode, arguments: ['Hi, this is test.'] })
     .send({ from: accounts[0], gas: '1000000' })
+
+    myapp.setProvider(provider)
 })
 
 describe('MyApp', () => {
   it('deploys a contract', () => {
-    console.log(myapp)
+    assert.ok(myapp.options.address)
+  })
+
+  it('has a default message', async () => {
+    const message = await myapp.methods.textMessage().call()
+    assert.equal(message, 'Hi, this is test.')
+  })
+
+  it('can set new message', async () => {
+    await myapp.methods.setTextMessage('XDD').send( { from: accounts[0]})
+    const message = await myapp.methods.textMessage().call()
+    assert.equal(message, 'XDD')
   })
 })
