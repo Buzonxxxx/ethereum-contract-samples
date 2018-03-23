@@ -4,10 +4,10 @@ contract MyApp {
     string public textMessage;
 
     function MyApp(string initialTextMessage) public {
-       textMessage = initialTextMessage;
+        textMessage = initialTextMessage;
     }
 
     function setTextMessage(string newText) public {
-      textMessage = newText;
+        textMessage = newText;
     }
 }

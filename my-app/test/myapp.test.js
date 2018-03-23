@@ -12,7 +12,7 @@ beforeEach(async () => {
   accounts = await web3.eth.getAccounts()
 
   myapp = await new web3.eth.Contract(JSON.parse(interface))
-    .deploy({ data: bytecode, arguments: ['Hi, this is test.'] })
+    .deploy({ data: bytecode, })
     .send({ from: accounts[0], gas: '1000000' })
 
     myapp.setProvider(provider)
@@ -20,17 +20,17 @@ beforeEach(async () => {
 
 describe('MyApp', () => {
   it('deploys a contract', () => {
-    assert.ok(myapp.options.address)
+    assert.ok(myapp.options.address)｀｀
   })
 
-  it('has a default message', async () => {
-    const message = await myapp.methods.textMessage().call()
-    assert.equal(message, 'Hi, this is test.')
-  })
+  // it('has a default message', async () => {
+  //   const message = await myapp.methods.textMessage().call()
+  //   assert.equal(message, 'Hi, this is test.')
+  // })
 
-  it('can set new message', async () => {
-    await myapp.methods.setTextMessage('XDD').send( { from: accounts[0]})
-    const message = await myapp.methods.textMessage().call()
-    assert.equal(message, 'XDD')
-  })
+  // it('can set new message', async () => {
+  //   await myapp.methods.setTextMessage('XDD').send( { from: accounts[0]})
+  //   const message = await myapp.methods.textMessage().call()
+  //   assert.equal(message, 'XDD')
+  // })
 })
