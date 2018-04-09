@@ -67,7 +67,7 @@ describe('Lottery Contract', () => {
         from: accounts[0],
         value: 200 //wei
       })
-      assert(false)
+      assert(false) //always false
     } catch (err) {
       assert(err)
     }
