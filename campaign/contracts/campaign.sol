@@ -9,6 +9,7 @@ contract Campaign {
         bool complete;
     }
     
+    Request[] public requests;
     address public manager;
     uint public minimumContribution;
     address[] public approvers;
@@ -21,5 +22,6 @@ contract Campaign {
     function contribute() public payable {
         require(msg.value > minimumContribution);
         approvers.push(msg.sender);
+    
     }
 }
