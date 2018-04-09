@@ -10,5 +10,8 @@ contract Campaign {
         minimumContribution = minimum;
     }
     
-    
+    function contribute() public payable {
+        require(msg.value > minimumContribution);
+        approvers.push(msg.sender);
+    }
 }
