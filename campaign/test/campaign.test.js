@@ -18,24 +18,25 @@ beforeEach(async () => {
   factory = await new web3.eth.Contract(JSON.parse(compiledFactory.interface))
     .deploy({ data: compiledFactory.bytecode })
     .send({ from: accounts[0], gas: '1000000' })
-
-  await factory.methods.createCampaign('100').send({
-    from: account[0],
+  
+  await factory.methods.createCampaign('100').send({  // 100wei
+    from: accounts[0],
     gas: '1000000'
   })
 
   const address = await factory.methods.getDeployedCampaigns().call()
   campaignAddress = address[0]
-  //已知地址, 可帶入地址
+  
   campaign = await new web3.eth.Contract(
     JSON.parse(compiledCampaign.interface),
-    campaignAddress
+    campaignAddress //已知地址, 可帶入地址
   )
 
 })
 
-describe('CampaignFactory Contract', () => {
-  it('deploys a contract', () => {
+describe('Campaigns', () => {
+  it('deploys a factory and campaign', () => {
     assert.ok(factory.options.address)
+    assert.ok(campaign.options.address)
   }) 
 })
