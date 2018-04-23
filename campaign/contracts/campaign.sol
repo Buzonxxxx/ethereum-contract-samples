@@ -31,7 +31,7 @@ contract Campaign {
         approvers[msg.sender] = true;
     }
 
-    function createRequest(string description, uint value, address recipient, uint approvalCount) public restricted {
+    function createRequest(string description, uint value, address recipient) public restricted {
         // Create a variable that its type is Request
         Request memory newRequest = Request({
             description: description,
@@ -53,5 +53,13 @@ contract Campaign {
 
         request.approvals[msg.sender] = true;
         request.approvalCount++;
+    }
+    // get more than 50% agreement
+    function finalizeRequest(uint index) public restricted {
+        Request storage request = requests[index];
+        require(!request.complete);
+
+        request.complete = true;
+
     }
 }
