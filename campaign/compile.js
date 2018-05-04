@@ -14,10 +14,11 @@ const output = solc.compile(source, 1).contracts
 // check and create build folder
 fs.ensureDirSync(buildPath)
 
-// ouput contract to json
+// for..in loop: to iterate the keys of object
 for (let contract in output) {
   fs.outputJsonSync(
-    path.resolve(buildPath, `${contract.replace(':', '')}.json`),
+    path.resolve(buildPath, `${contract.replace(':', '')}.json`), 
     output[contract]
   )
+  // console.log(path.resolve(buildPath, `${contract.replace(':', '')}.json`) )
 }

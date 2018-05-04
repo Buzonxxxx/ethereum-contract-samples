@@ -27,16 +27,39 @@ beforeEach(async () => {
   const address = await factory.methods.getDeployedCampaigns().call()
   campaignAddress = address[0]
   
-  campaign = await new web3.eth.Contract(
-    JSON.parse(compiledCampaign.interface),
-    campaignAddress //已知地址, 可帶入地址
-  )
-
+  campaign = await new web3.eth.Contract(JSON.parse(compiledCampaign.interface),campaignAddress)
 })
 
 describe('Campaigns', () => {
   it('deploys a factory and campaign', () => {
     assert.ok(factory.options.address)
     assert.ok(campaign.options.address)
+  }) 
+  it('marks caller as the campaign manager', async () => {
+    manager = await campaign.methods.manager().call()
+    assert.equal(accounts[0], manager)
+  }) 
+  it('allows people to contribute money and marks them as approvers', async () => {
+    await campaign.methods.contribute()
+    .send({ value: '200', from: accounts[1] })
+    isContributor = await campaign.methods.approvers(accounts[1]) 
+    assert(isContributor)
+  }) 
+  it('requires a minium contribution', async () => {
+    try {
+      await campaign.methods.contribute()
+      .send({ value: '5', from: accounts[1] })
+      assert(false)
+    } catch (err) {
+      assert(err)
+      
+    }
+  }) 
+  it('allows a manager to make a payment request', async () => {
+    await campaign.methods.createRequest('Buy batteries', '100', accounts[1])
+    .send({ from: accounts[0], gas: '1000000' })
+    request = await campaign.methods.requests(0).call()
+    assert.equal('Buy batteries', request.description)
+    assert.equal(accounts[1], request.recipient)
   }) 
 })
