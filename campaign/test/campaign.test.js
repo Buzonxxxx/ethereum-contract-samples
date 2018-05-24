@@ -49,10 +49,11 @@ describe('Campaigns', () => {
     try {
       await campaign.methods.contribute()
       .send({ value: '5', from: accounts[1] })
-      assert(false)
     } catch (err) {
       assert(err)
+      return
     }
+    assert(false)
   }) 
   it('allows a manager to make a payment request', async () => {
     await campaign.methods
