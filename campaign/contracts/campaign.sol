@@ -3,19 +3,12 @@ pragma solidity ^0.4.17;
 contract CampaignFactory {
     address[] public deployedCampaigns;
 
-    function createCampaign(
-        uint minimum
-    ) 
-        public 
-    {
+    function createCampaign(uint minimum) public {
         address newCampaign = new Campaign(minimum, msg.sender);
         deployedCampaigns.push(newCampaign);
     }
 
-    function getDeployedCampaigns() 
-        public 
-        view 
-    returns (address[]) {
+    function getDeployedCampaigns() public view returns (address[]) {
         return deployedCampaigns;
     }
 }
@@ -36,44 +29,27 @@ contract Campaign {
     Request[] public requests;
     address public manager;
     uint public minimumContribution;
-    // 有付過錢的人
+    // 有捐過錢的人
     mapping(address => bool) public approvers;
     // 付過錢的人數量
     uint public approversCount;
     
-    modifier restricted() 
-    {
+    modifier restricted() {
         require(msg.sender == manager);
         _;
     }
-    // constructor
-    function Campaign(
-        uint minimum, 
-        address creator
-    )   
-        public 
-    {
+    constructor(uint minimum, address creator) public {
         manager = creator;
         minimumContribution = minimum;
     }
     
-    function contribute() 
-        public 
-        payable 
-    {
+    function contribute() public payable {
         require(msg.value > minimumContribution);
         approvers[msg.sender] = true;
         approversCount++;
     }
 
-    function createRequest(
-        string description, 
-        uint value, 
-        address recipient
-    )   
-        public 
-        restricted 
-    {
+    function createRequest(string description, uint value, address recipient) public restricted {
         Request memory newRequest = Request({
             description: description,
             value: value,
@@ -85,11 +61,7 @@ contract Campaign {
         requests.push(newRequest);
     }
 
-    function approveRequest(
-        uint index
-    ) 
-        public 
-    {
+    function approveRequest(uint index) public {
         Request storage request = requests[index];
         // 確認有付錢
         require(approvers[msg.sender]);
@@ -100,11 +72,7 @@ contract Campaign {
         request.approvalCount++;
     }
 
-    function finalizeRequest(
-        uint index
-    ) 
-        public restricted 
-    {
+    function finalizeRequest(uint index) public restricted {
         Request storage request = requests[index];
         // 投票同意的人超過付錢的人一半
         require(request.approvalCount > (approversCount / 2));
@@ -112,6 +80,5 @@ contract Campaign {
 
         request.recipient.transfer(request.value);
         request.complete = true;
-
     }
 }

@@ -4,7 +4,7 @@ contract Lottery {
     address public manager;
     address[] public players;
     
-    function Lottery() public {
+    constructor() public {
         manager = msg.sender;
     }
     
@@ -14,6 +14,7 @@ contract Lottery {
     }
     
     function random() private view returns(uint) {
+        // keccak256: compute the Ethereum-SHA-3 (Keccak-256) hash of the (tightly packed) arguments
         return uint(keccak256(block.difficulty, now, players));
     }
     
@@ -21,8 +22,8 @@ contract Lottery {
         uint index = random() % players.length;
         //players[index] = 0xafk323523523llhg4
         players[index].transfer(this.balance);
-        //reset state, set zero size array
-        players = new address[](0);
+        //reset state, initial size is 0
+        players = new address[](0); 
     }
     
     modifier restricted() {
