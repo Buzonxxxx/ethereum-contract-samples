@@ -30,6 +30,7 @@ contract Campaign {
     address public manager;
     uint public minimumContribution;
     // 有捐過錢的人
+    // key: address, value: boolean
     mapping(address => bool) public approvers;
     // 付過錢的人數量
     uint public approversCount;

@@ -15,7 +15,7 @@ contract Lottery {
     
     function random() private view returns(uint) {
         // keccak256: compute the Ethereum-SHA-3 (Keccak-256) hash of the (tightly packed) arguments
-        return uint(keccak256(block.difficulty, now, players));
+        return uint(keccak256(abi.encodePacked(block.difficulty, now, players)));
     }
     
     function pickWinner() public restricted {
