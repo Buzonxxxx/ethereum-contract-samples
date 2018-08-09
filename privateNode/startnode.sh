@@ -1,0 +1,1 @@
+geth --networkid 4224 --mine --minerthreads 1 --datadir "~/code/ethereum-contract-samples/privateNode" --nodiscover --rpc --rpcport "8545" --port "30303" --rpccorsdomain "*" --nat "any" --rpcapi eth,web3,personal,net --unlock 0 --password ~/code/ethereum-contract-samples/privateNode/password.sec --ipcpath "~/Library/Ethereum/geth.ipc" 

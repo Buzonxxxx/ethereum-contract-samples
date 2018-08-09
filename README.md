@@ -10,3 +10,5 @@ Single contract with test by using web3&solc
 Lottery contract with front-end
 ### Project kickstart
 Decentrialized Kickstarter by using `react`, `next.js` and `semantic-ui-react`
+### Project privateNode
+Use `geth(go-ethereum)` to setup local private node
