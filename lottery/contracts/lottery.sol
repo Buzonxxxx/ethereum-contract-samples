@@ -27,7 +27,7 @@ contract Lottery {
     }
     
     modifier restricted() {
-        require(msg.sender == manager);
+        require(msg.sender == manager, "只有manager有權限操作");
         _;
     }
     
